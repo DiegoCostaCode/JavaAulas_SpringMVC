@@ -19,4 +19,13 @@ public class Filme {
     @Column(name = "categoria")
     @Enumerated(EnumType.STRING)
     private Categoria categoria;
+
+    public Filme(){};
+
+    public Filme(Long id, String titulo, String diretor, Categoria categoria) {
+        this.id = id;
+        this.titulo = titulo;
+        this.diretor = diretor;
+        this.categoria = categoria;
+    }
 }

@@ -5,10 +5,41 @@
     <title>Filme</title>
 </head>
 <body>
-    <div th:replace="~{fragments/header :: header}"></div>
-    <h1>Livro: <span th:text="${filme.getTitulo()}"></span></h1>
-    <p>Autor: <span th:text="${filme.getDiretor()}"></span></p>
-    <p>Categoria: <span th:text="${filme.getCategoria().getDescricao()}"></span></p>
-    <div th:replace="~{fragments/footer :: footer}"></div>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+
+    <div th:object="${filme}"> <!-- Exibe os detalhes do filme utilizando o objeto 'filme' vindo do controlador -->
+
+        <!-- Utiliza '*' para acessar os atributos (titulo, diretor e categoria) do objeto Filme.   -->
+        <h1>Filme: <span th:text="*{titulo}"></span></h1>
+
+        <p>Autor: <span th:text="*{diretor}"></span></p>
+
+        <p>Categoria: <span th:text="*{categoria.descricao}"></span></p>
+
+    </div>
+
+    <hr>
+
+    <div>
+        <h3>Top diretores</h3>
+        <!-- Utilizando each, para mostrar objeto de listas  -->
+        <li th:each="filme : ${filmes}" th:text="${filme.diretor}"></li>
+    </div>
+
+    <div>
+        <h3>Top categorias</h3>
+        <!-- Utilizando each, mas usando com '*' para acessar os atributos do item da lista -->
+        <li th:each="filme : ${filmes}" th:object="${filme}" th:text="*{categoria.descricao}"></li>
+    </div>
+
+    <p>
+        <!-- Link para voltar à página inicial da aplicação -->
+        <a th:href="@{/}">Voltar para home</a>
+    </p>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
 </body>
 </html>

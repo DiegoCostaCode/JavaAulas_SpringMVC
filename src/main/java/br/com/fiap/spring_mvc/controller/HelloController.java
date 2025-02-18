@@ -3,21 +3,17 @@ package br.com.fiap.spring_mvc.controller;
 import br.com.fiap.spring_mvc.model.Categoria;
 import br.com.fiap.spring_mvc.model.Filme;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
+
 @Controller
 public class HelloController {
-    @GetMapping("/hello")
-    public String hello(Model model){
-        model.addAttribute("message", "Hello World!");
-        //--->Para mostrar no front, você vai acessar através da message
-        return "hello"; //---> Se refere ao nome do template no HTML, ex: hello.hmtl
-    };
 
-
-    @GetMapping("/hello2")
+    @GetMapping("/")
     public ModelAndView hello2(){
 
         ModelAndView mv = new ModelAndView("hello");
@@ -35,8 +31,18 @@ public class HelloController {
         filme.setDiretor("Tarantino");
         filme.setCategoria(Categoria.DRAMA);
 
+        Filme filme2 = new Filme();
+
+        filme2.setTitulo("Bastardos Inglorios");
+        filme2.setDiretor("Michael");
+        filme2.setCategoria(Categoria.DRAMA);
+
+        List<Filme> filmes = Arrays.asList(filme,filme2);
+
         ModelAndView mv = new ModelAndView("filme");
+
         mv.addObject("filme",filme);
+        mv.addObject("filmes",filmes);
 
         return mv;
     };

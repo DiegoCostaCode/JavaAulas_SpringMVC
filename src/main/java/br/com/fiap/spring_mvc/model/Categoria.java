@@ -5,7 +5,8 @@ public enum Categoria {
     ROMANCE("Romance"),
     FICCAO("Ficção"),
     TERROR("Terror"),
-    DRAMA("Drama");
+    DRAMA("Drama"),
+    ACAO("Ação");
 
     private String descricao;
 

@@ -22,30 +22,30 @@ public class HelloController {
         return mv;
     };
 
-    @GetMapping("/filme")
-    public ModelAndView filme(){
-
-        Filme filme = new Filme();
-
-        filme.setTitulo("Django");
-        filme.setDiretor("Tarantino");
-        filme.setCategoria(Categoria.DRAMA);
-
-        Filme filme2 = new Filme();
-
-        filme2.setTitulo("Bastardos Inglorios");
-        filme2.setDiretor("Michael");
-        filme2.setCategoria(Categoria.DRAMA);
-
-        List<Filme> filmes = Arrays.asList(filme,filme2);
-
-        ModelAndView mv = new ModelAndView("filme");
-
-        mv.addObject("filme",filme);
-        mv.addObject("filmes",filmes);
-
-        return mv;
-    };
+//    @GetMapping("/filme")
+//    public ModelAndView filme(){
+//
+//        Filme filme = new Filme();
+//
+//        filme.setTitulo("Django");
+//        filme.setDiretor("Tarantino");
+//        filme.setCategoria(Categoria.DRAMA);
+//
+//        Filme filme2 = new Filme();
+//
+//        filme2.setTitulo("Bastardos Inglorios");
+//        filme2.setDiretor("Michael");
+//        filme2.setCategoria(Categoria.DRAMA);
+//
+//        List<Filme> filmes = Arrays.asList(filme,filme2);
+//
+//        ModelAndView mv = new ModelAndView("filme");
+//
+//        mv.addObject("filme",filme);
+//        mv.addObject("filmes",filmes);
+//
+//        return mv;
+//    };
 
 
 

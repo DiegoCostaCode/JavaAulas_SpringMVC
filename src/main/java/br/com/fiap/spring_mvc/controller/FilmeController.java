@@ -16,6 +16,8 @@ public class FilmeController {
 
     @Autowired
     FilmeService filmeService;
+    @Autowired
+    private FilmeRepository filmeRepository;
 
     @GetMapping(value = "/")
     public ModelAndView filmeCreate(){
@@ -26,8 +28,25 @@ public class FilmeController {
         return mv;
     }
 
-    @PostMapping(value = "/cadastro")
-    public ModelAndView filmeCreate(@Valid @ModelAttribute FilmeRequest filmeRequest){
+    @GetMapping(value = "/edit/{id}")
+    public ModelAndView filmeEdit(@PathVariable Long id){
+
+        Filme filme = filmeService.findFilmeById(id);
+
+        if(filme == null){
+            return filmeGetAll();
+        }
+
+        ModelAndView mv = new ModelAndView("updateFilme");
+
+        mv.addObject("idFilme", id);
+        mv.addObject("filmeRequest", filmeService.filmeToRequest(filme));
+
+        return mv;
+    }
+
+    @PostMapping(value = "/register")
+    public ModelAndView filmePost(@Valid @ModelAttribute FilmeRequest filmeRequest){
 
         Filme filme = filmeService.saveFilme(filmeRequest);
 
@@ -35,8 +54,24 @@ public class FilmeController {
 
         mv.addObject("filmeRequest", new FilmeRequest());
 
-        return filmeCreate();
+        return filmeGetAll();
     }
 
+    @GetMapping(value = "/list")
+    public ModelAndView filmeGetAll(){
+        ModelAndView mv = new ModelAndView("listFilme");
+
+        mv.addObject("filmes", filmeService.findAllFilmes());
+
+        return mv;
+    }
+
+    @GetMapping(value = "/delete/{id}")
+    public ModelAndView filmeDelete(@PathVariable Long id){
+
+        filmeService.deletarFilmeById(id);
+
+        return filmeGetAll();
+    }
 
 }

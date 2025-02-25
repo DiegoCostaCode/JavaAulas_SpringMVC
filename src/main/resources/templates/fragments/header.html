@@ -7,6 +7,9 @@
 <body>
     <header th:fragment="header">
         <h1>MVC Flix</h1>
+        <a th:href="@{/filme/}">Cadastrar filme</a>
+        <span> | </span>
+        <a th:href="@{/filme/list}">Listar filmes</a>
         <hr />
     </header>
 </body>

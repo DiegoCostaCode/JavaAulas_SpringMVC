@@ -2,37 +2,52 @@
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Lista de Livros</title>
+    <title>Lista de Filmes</title>
+    <link th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" rel="stylesheet" />
+    <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}" defer></script>
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+    <script th:src="@{/js/script.js}" defer></script>
 </head>
 <body>
-    <div th:replace="~{fragments/header :: header}"></div>
-    <div>
-        <h1>Lista de Filmes</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Título</th>
-                    <th>Diretor</th>
-                    <th>Categoria</th>
-                    <th>Categoria</th>
-                    <th>Ações</th>
-                </tr>
-                <tr th:each="filme : ${filmes}">
-                    <td th:text="${filme.id}"></td>
-                    <td th:text="${filme.titulo}"></td>
-                    <td th:text="${filme.diretor}"></td>
-                    <td th:text="${filme.categoria.descricao}"></td>
-                    <td th:text="${filme.streaming}"></td>
-                    <td>
-                        <a th:href="@{/filme/edit/{id}(id = ${filme.id})}">Editar</a>
-                        <span> | </span>
-                        <a th:href="@{/filme/delete/{id}(id = ${filme.id})}">Deletar</a>
-                    </td>
-                </tr>
-            </thead>
-        </table>
+<div th:replace="~{fragments/header :: header}"></div>
+<div class="main-content">
+    <h1>Lista de Filmes</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Diretor</th>
+            <th>Detalhes</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="filme : ${filmes}">
+            <td th:text="${filme.id}"></td>
+            <td th:text="${filme.titulo}"></td>
+            <td th:text="${filme.diretor}"></td>
+            <td>
+                <button th:attr="onclick=|showModal('infModal' + ${filme.id})|">Detalhes</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div th:each="filme : ${filmes}" th:attr="id='infModal' + ${filme.id}" style="display:none">
+        <br>
+        <p>
+            <strong>ID:</strong> <span th:text="${filme.id}"></span><br>
+            <strong>Título:</strong> <span th:text="${filme.titulo}"></span><br>
+            <strong>Diretor:</strong> <span th:text="${filme.diretor}"></span><br>
+            <strong>Categoria:</strong> <span th:text="${filme.categoria.descricao}"></span><br>
+            <strong>Streaming:</strong> <span th:text="${filme.streaming}"></span><br>
+            <a th:href="@{/filme/edit/{id}(id = ${filme.id})}">Editar</a>
+            <a th:href="@{/filme/delete/{id}(id = ${filme.id})}">Deletar</a>
+        </p>
+        <button th:attr="onclick=|hideModal('infModal' + ${filme.id})|">Fechar</button>
     </div>
-    <div th:replace="~{fragments/footer :: footer}"></div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 </html>

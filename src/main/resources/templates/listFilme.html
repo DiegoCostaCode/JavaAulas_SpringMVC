@@ -41,6 +41,7 @@
             <strong>Diretor:</strong> <span th:text="${filme.diretor}"></span><br>
             <strong>Categoria:</strong> <span th:text="${filme.categoria.descricao}"></span><br>
             <strong>Streaming:</strong> <span th:text="${filme.streaming}"></span><br>
+
             <a th:href="@{/filme/edit/{id}(id = ${filme.id})}">Editar</a>
             <a th:href="@{/filme/delete/{id}(id = ${filme.id})}">Deletar</a>
         </p>

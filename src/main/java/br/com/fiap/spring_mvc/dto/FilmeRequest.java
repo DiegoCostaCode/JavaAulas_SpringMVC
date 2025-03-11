@@ -10,16 +10,20 @@ import lombok.Setter;
 @Setter
 public class FilmeRequest
     {
-        @NotBlank(message = "Titulo não pode ser nulo")
-        @Size(min = 3, max = 30, message = "O título deve ter entre 3 e 30 caracteres")
+        @NotBlank(message = "{titulo.notBlank}")
+        @Size(min = 3, max = 30, message = "{titulo.size}")
         private String titulo;
-        @Size(min = 3, max = 30, message = "O nome do diretor deve ter entre 3 e 30 caracteres")
-        @NotBlank(message = "Diretor não pode ser nulo")
+
+        @NotBlank(message = "{diretor.notBlank}")
+        @Size(min = 3, max = 30, message = "{diretor.size}")
         private String diretor;
-        @NotNull(message = "Categoria não pode ser nulo")
-        Categoria categoria;
-        @Size(min = 3, max = 30, message = "O título deve ter entre 3 e 20 caracteres")
-        @NotBlank(message = "Streaming não pode ser nulo")
+
+        @NotNull(message = "{categoria.notNull}")
+        private Categoria categoria;
+
+        @NotBlank(message = "{streaming.notBlank}")
+        @Size(min = 3, max = 30, message = "{streaming.size}")
         private String streaming;
+
     }
     

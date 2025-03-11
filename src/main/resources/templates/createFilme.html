@@ -9,40 +9,38 @@
 </head>
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
-<div class="main-content">
+<div>
     <form method="post" th:action="@{/filme/register}" th:object="${filmeRequest}">
-        <table>
-            <tr>
-                <td><label for="titulo">Título</label></td>
-                <td><input type="text" id="titulo" placeholder="Digite o nome do filme" required th:field="*{titulo}"></td>
-            </tr>
-            <tr>
-                <td><label for="diretor">Diretor</label></td>
-                <td><input type="text" id="diretor" placeholder="Digite o nome do diretor" required th:field="*{diretor}"></td>
-            </tr>
-            <tr>
-                <td><label for="categoria">Categoria</label></td>
-                <td>
-                    <select id="categoria" name="categoria" th:field="*{categoria}">
-                        <option selected hidden value="">Selecione uma opção</option>
-                        <option value="ROMANCE">Romance</option>
-                        <option value="FICCAO">Ficção</option>
-                        <option value="TERROR">Terror</option>
-                        <option value="DRAMA">Drama</option>
-                        <option value="ACAO">Ação</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td><label for="streaming">Streaming</label></td>
-                <td><input type="text" id="streaming" required placeholder="Digite onde eu encontro este filme" th:field="*{streaming}"></td>
-            </tr>
-            <tr>
-                <td colspan="2" style="text-align:center;">
-                    <button type="submit" value="cadastrar">Cadastrar</button>
-                </td>
-            </tr>
-        </table>
+        <div class="form-group">
+            <label for="titulo">Título</label>
+            <input type="text" id="titulo" placeholder="Digite o nome do filme" required th:field="*{titulo}">
+            <p th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}" th:errorclass="error"></p>
+        </div>
+        <div class="form-group">
+            <label for="diretor">Diretor</label>
+            <input type="text" id="diretor" placeholder="Digite o nome do diretor" required th:field="*{diretor}">
+            <p th:if="${#fields.hasErrors('diretor')}" th:errors="*{diretor}" th:errorclass="error"></p>
+        </div>
+        <div class="form-group">
+            <label for="categoria">Categoria</label>
+            <select id="categoria" name="categoria" th:field="*{categoria}">
+                <option selected hidden value="">Selecione uma opção</option>
+                <option value="ROMANCE">Romance</option>
+                <option value="FICCAO">Ficção</option>
+                <option value="TERROR">Terror</option>
+                <option value="DRAMA">Drama</option>
+                <option value="ACAO">Ação</option>
+            </select>
+            <p th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}" th:errorclass="error"></p>
+        </div>
+        <div class="form-group">
+            <label for="streaming">Streaming</label>
+            <input type="text" id="streaming" required placeholder="Digite onde eu encontro este filme" th:field="*{streaming}">
+            <p th:if="${#fields.hasErrors('streaming')}" th:errors="*{streaming}" th:errorclass="error"></p>
+        </div>
+        <div class="form-group" style="text-align:center;">
+            <button type="submit" value="cadastrar">Cadastrar</button>
+        </div>
     </form>
 </div>
 <div th:replace="~{fragments/footer :: footer}"></div>

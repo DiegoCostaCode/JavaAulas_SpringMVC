@@ -10,3 +10,23 @@
 th {
     width: 10px;
 }
+
+form
+{
+    width: 300px;
+}
+
+.form-group
+{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    text-align: start;
+    margin: 15px 10px;
+}
+
+.error
+{
+    color: red;
+}

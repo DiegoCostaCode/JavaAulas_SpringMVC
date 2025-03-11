@@ -7,8 +7,9 @@ import br.com.fiap.spring_mvc.service.FilmeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/filme")
@@ -16,62 +17,62 @@ public class FilmeController {
 
     @Autowired
     FilmeService filmeService;
+
     @Autowired
     private FilmeRepository filmeRepository;
 
     @GetMapping(value = "/")
-    public ModelAndView filmeCreate(){
-        ModelAndView mv = new ModelAndView("createFilme");
-
-        mv.addObject("filmeRequest", new FilmeRequest());
-
-        return mv;
-    }
-
-    @GetMapping(value = "/edit/{id}")
-    public ModelAndView filmeEdit(@PathVariable Long id){
-
-        Filme filme = filmeService.findFilmeById(id);
-
-        if(filme == null){
-            return filmeGetAll();
-        }
-
-        ModelAndView mv = new ModelAndView("updateFilme");
-
-        mv.addObject("idFilme", id);
-        mv.addObject("filmeRequest", filmeService.filmeToRequest(filme));
-
-        return mv;
-    }
-
-    @PostMapping(value = "/register")
-    public ModelAndView filmePost(@Valid @ModelAttribute FilmeRequest filmeRequest){
-
-        Filme filme = filmeService.saveFilme(filmeRequest);
-
-        ModelAndView mv = new ModelAndView("createFilme");
-
-        mv.addObject("filmeRequest", new FilmeRequest());
-
-        return filmeGetAll();
+    public String filmeCreate(Model model){
+        model.addAttribute("filmeRequest", new FilmeRequest());
+        return "createFilme";
     }
 
     @GetMapping(value = "/list")
-    public ModelAndView filmeGetAll(){
-        ModelAndView mv = new ModelAndView("listFilme");
+    public String filmeGetAll(Model model){
+        model.addAttribute("filmes", filmeService.findAllFilmes());
+        return "listFilme";
+    }
 
-        mv.addObject("filmes", filmeService.findAllFilmes());
+    @PostMapping(value = "/register")
+    public String filmePost(@Valid  FilmeRequest filmeRequest, BindingResult result, Model model){
 
-        return mv;
+        if(result.hasErrors()){
+            return "createFilme";
+        }
+
+        Filme filme = filmeService.saveFilme(filmeRequest);
+        return filmeGetAll(model);
+    }
+
+    @GetMapping(value = "/edit/{id}")
+    public String filmeEdit(@PathVariable Long id, Model model){
+        Filme filme = filmeService.findFilmeById(id);
+
+        if(filme == null){
+            return filmeGetAll(model); // Caso não encontre o filme, exibe a lista
+        }
+
+        FilmeRequest filmeRequest = new FilmeRequest();
+        filmeRequest.setTitulo(filme.getTitulo());
+        filmeRequest.setDiretor(filme.getDiretor());
+        filmeRequest.setCategoria(filme.getCategoria());
+        filmeRequest.setStreaming(filme.getStreaming());
+
+        model.addAttribute("filmeRequest", filmeRequest);
+        model.addAttribute("idFilme", id);
+
+        return "updateFilme";
     }
 
     @GetMapping(value = "/delete/{id}")
-    public ModelAndView filmeDelete(@PathVariable Long id){
-
+    public String filmeDelete(@PathVariable Long id, Model model){
         filmeService.deletarFilmeById(id);
-
-        return filmeGetAll();
+        return filmeGetAll(model);
     }
-
+    
+    @PostMapping(value = "/update/{id}")
+    public String filmeUpdate(@PathVariable Long id, @Valid  FilmeRequest filmeRequest, Model model){
+        Filme filme = filmeService.updateFilme(filmeRequest, id);
+        return filmeGetAll(model);
+    }
 }

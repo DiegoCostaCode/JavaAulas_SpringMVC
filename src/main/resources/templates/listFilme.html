@@ -11,14 +11,14 @@
 <body>
 <div th:replace="~{fragments/header :: header}"></div>
 <div class="main-content">
-    <h1>Lista de Filmes</h1>
+    <h1><span th:text="${#messages.msg('listfilm.name')}"></span></h1>
     <table>
         <thead>
         <tr>
             <th>ID</th>
-            <th>Título</th>
-            <th>Diretor</th>
-            <th>Detalhes</th>
+            <th><span th:text="${#messages.msg('listfilm.field.title')}"></span></th>
+            <th><span th:text="${#messages.msg('listfilm.field.director')}"></span></th>
+            <th><span th:text="${#messages.msg('listfilm.action.details')}"></span></th>
         </tr>
         </thead>
         <tbody>
@@ -27,7 +27,7 @@
             <td th:text="${filme.titulo}"></td>
             <td th:text="${filme.diretor}"></td>
             <td>
-                <button th:attr="onclick=|showModal('infModal' + ${filme.id})|">Detalhes</button>
+                <button th:attr="onclick=|showModal('infModal' + ${filme.id})|"><span th:text="${#messages.msg('listfilm.action.details')}"></span></button>
             </td>
         </tr>
         </tbody>
@@ -37,15 +37,15 @@
         <br>
         <p>
             <strong>ID:</strong> <span th:text="${filme.id}"></span><br>
-            <strong>Título:</strong> <span th:text="${filme.titulo}"></span><br>
-            <strong>Diretor:</strong> <span th:text="${filme.diretor}"></span><br>
-            <strong>Categoria:</strong> <span th:text="${filme.categoria.descricao}"></span><br>
-            <strong>Streaming:</strong> <span th:text="${filme.streaming}"></span><br>
+            <strong><span th:text="${#messages.msg('listfilm.field.title')}"></span>:</strong> <span th:text="${filme.titulo}"></span><br>
+            <strong><span th:text="${#messages.msg('listfilm.field.director')}"></span>:</strong> <span th:text="${filme.diretor}"></span><br>
+            <strong><span th:text="${#messages.msg('listfilm.field.category')}"></span>:</strong> <span th:text="${filme.categoria.descricao}"></span><br>
+            <strong><span th:text="${#messages.msg('listfilm.field.streaming')}"></span>:</strong> <span th:text="${filme.streaming}"></span><br>
 
-            <a th:href="@{/filme/edit/{id}(id = ${filme.id})}">Editar</a>
-            <a th:href="@{/filme/delete/{id}(id = ${filme.id})}">Deletar</a>
+            <a th:href="@{/filme/edit/{id}(id = ${filme.id})}"><span th:text="${#messages.msg('listfilm.route.edit')}"></span></a>
+            <a th:href="@{/filme/delete/{id}(id = ${filme.id})}"><span th:text="${#messages.msg('listfilm.route.delete')}"></span></a>
         </p>
-        <button th:attr="onclick=|hideModal('infModal' + ${filme.id})|">Fechar</button>
+        <button th:attr="onclick=|hideModal('infModal' + ${filme.id})|"><span th:text="${#messages.msg('listfilm.action.close')}"></span></button>
     </div>
 </div>
 

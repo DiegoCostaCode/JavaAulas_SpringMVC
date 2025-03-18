@@ -21,7 +21,7 @@ public class FilmeController {
     @Autowired
     private FilmeRepository filmeRepository;
 
-    @GetMapping(value = "/")
+    @GetMapping()
     public String filmeCreate(Model model){
         model.addAttribute("filmeRequest", new FilmeRequest());
         return "createFilme";
@@ -41,11 +41,12 @@ public class FilmeController {
         }
 
         Filme filme = filmeService.saveFilme(filmeRequest);
-        return filmeGetAll(model);
+        return "redirect:/filme/list";
     }
 
     @GetMapping(value = "/edit/{id}")
     public String filmeEdit(@PathVariable Long id, Model model){
+
         Filme filme = filmeService.findFilmeById(id);
 
         if(filme == null){

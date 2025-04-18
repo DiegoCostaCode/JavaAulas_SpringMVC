@@ -1,13 +1,15 @@
 package br.com.fiap.spring_mvc.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.math.BigDecimal;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "filmes")
 public class Filme {
@@ -23,13 +25,4 @@ public class Filme {
     private Categoria categoria;
     @Column(name = "streaming")
     private String streaming;
-
-    public Filme(){};
-
-    public Filme(Long id, String titulo, String diretor, Categoria categoria) {
-        this.id = id;
-        this.titulo = titulo;
-        this.diretor = diretor;
-        this.categoria = categoria;
-    }
 }

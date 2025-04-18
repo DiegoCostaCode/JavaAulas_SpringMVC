@@ -1,6 +1,7 @@
 package br.com.fiap.spring_mvc.service;
 
 import br.com.fiap.spring_mvc.dto.FilmeRequest;
+import br.com.fiap.spring_mvc.dto.FilmeResponse;
 import br.com.fiap.spring_mvc.model.Filme;
 import br.com.fiap.spring_mvc.repository.FilmeRepository;
 import org.springframework.beans.BeanUtils;
@@ -35,15 +36,22 @@ public class FilmeService {
         return null;
     }
 
-    public void deletarFilmeById(long id)
+    public boolean deletarFilmeById(long id)
     {
+        Filme filme = findFilmeById(id);
+
+        if(filme == null)
+        {
+            return false;
+        }
+
         filmeRepository.deleteById(id);
+        return true;
     }
 
     public Filme requestToFilme(FilmeRequest filmeRequest)
     {
         Filme filme = new Filme();
-
 
         filme.setTitulo(filmeRequest.getTitulo());
         filme.setDiretor(filmeRequest.getDiretor());
@@ -53,13 +61,17 @@ public class FilmeService {
         return filme;
     }
 
-    public FilmeRequest filmeToRequest(Filme filme)
+    public FilmeResponse filmeToResponse(Filme filme)
     {
-        FilmeRequest filmeRequest = new FilmeRequest();
+        FilmeResponse filmeResponse = new FilmeResponse();
 
-        BeanUtils.copyProperties(filme, filmeRequest);
+        filmeResponse.setId(filme.getId());
+        filmeResponse.setTitulo(filme.getTitulo());
+        filmeResponse.setDiretor(filme.getDiretor());
+        filmeResponse.setCategoria(filme.getCategoria());
+        filmeResponse.setStreaming(filme.getStreaming());
 
-        return filmeRequest;
+        return filmeResponse;
     }
 
     public List<Filme> findAllFilmes()

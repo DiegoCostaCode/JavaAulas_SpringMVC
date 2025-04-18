@@ -1,6 +1,12 @@
 package br.com.fiap.spring_mvc.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public enum Categoria {
     ROMANCE("Romance"),
     FICCAO("Ficção"),
@@ -9,12 +15,4 @@ public enum Categoria {
     ACAO("Ação");
 
     private String descricao;
-
-    Categoria(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
 }

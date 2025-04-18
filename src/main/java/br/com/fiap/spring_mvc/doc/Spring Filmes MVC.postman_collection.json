@@ -1,0 +1,221 @@
+{
+	"info": {
+		"_postman_id": "24abe0c9-c0c1-494d-b9ec-3ebee0e6251a",
+		"name": "Spring Filmes MVC",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34573297"
+	},
+	"item": [
+		{
+			"name": "GetAll",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Resposta 200 -> Retornar os nossos itens.\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"\r",
+							"    pm.response.to.have.status(200);\r",
+							"    pm.expect(jsonData).to.be.an('array');\r",
+							"\r",
+							"    if (jsonData.length > 0) {\r",
+							"        jsonData.forEach(item => {\r",
+							"            pm.expect(item).to.have.property(\"id\");\r",
+							"            pm.expect(item).to.have.property(\"titulo\");\r",
+							"            pm.expect(item).to.have.property(\"diretor\");\r",
+							"            pm.expect(item).to.have.property(\"categoria\");\r",
+							"            pm.expect(item).to.have.property(\"streaming\");\r",
+							"        });\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/filme/api/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"filme",
+						"api",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Resposta 201 -> Recebemos e salvamos\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"\r",
+							"    const requestData = JSON.parse(pm.request.body.raw);\r",
+							"\r",
+							"    pm.expect(jsonData).to.have.property(\"titulo\", requestData.titulo);\r",
+							"    pm.expect(jsonData).to.have.property(\"diretor\", requestData.diretor);\r",
+							"    pm.expect(jsonData).to.have.property(\"categoria\", requestData.categoria);\r",
+							"    pm.expect(jsonData).to.have.property(\"streaming\", requestData.streaming);\r",
+							"    pm.expect(jsonData).to.have.property(\"id\");\r",
+							"    pm.expect(pm.response.code).to.eql(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Resposta 400 -> em input incorreto de informações\", function () {\r",
+							"    pm.expect(pm.response.code).to.eql(400);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Resposta 404 -> URI/Endpoint não encontrado\", function () {\r",
+							"    pm.expect(pm.response.code).to.eql(404);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"titulo\": \"O Senhor dos Anéis\",\r\n    \"diretor\": \"Peter Jackson\",\r\n    \"categoria\": \"FICCAO\",\r\n    \"streaming\": \"Amazon Prime Video\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/filme/api/",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"filme",
+						"api",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Resposta 404 -> Encontramos e atualizamos as informações\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    const requestData = JSON.parse(pm.request.body.raw);\r",
+							"    const pathId = parseInt(pm.request.url.path[pm.request.url.path.length - 1]);\r",
+							"    \r",
+							"    pm.expect(jsonData).to.have.property(\"id\", pathId);\r",
+							"    pm.expect(jsonData).to.have.property(\"titulo\", requestData.titulo);\r",
+							"    pm.expect(jsonData).to.have.property(\"diretor\", requestData.diretor);\r",
+							"    pm.expect(jsonData).to.have.property(\"categoria\", requestData.categoria);\r",
+							"    pm.expect(jsonData).to.have.property(\"streaming\", requestData.streaming);\r",
+							"    pm.expect(pm.response.code).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Resposta 404 -> ID inexistente\", function () {\r",
+							"    pm.expect(pm.response.code).to.eql(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Resposta 400 -> Faltam campos na requisição\", function () {\r",
+							"    pm.expect(pm.response.code).to.eql(400);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"titulo\": \"O Senhor dos Anéis\",\r\n    \"diretor\": \"Peter Jackson\",\r\n    \"categoria\": \"FICCAO\",\r\n    \"streaming\": \"Netflix\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/filme/api/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"filme",
+						"api",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Resposta 204 -> Encontramos e deletamos o objeto. No content.\", function () {\r",
+							"    const body = pm.response.text();\r",
+							"\r",
+							"    pm.expect(body === \"\").to.be.true;\r",
+							"    pm.expect(pm.response.code).to.eql(204);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Resposta 404 -> O ID não foi encontrado.\", function () {\r",
+							"\r",
+							"    pm.expect(pm.response.code).to.eql(404);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/filme/api/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"filme",
+						"api",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

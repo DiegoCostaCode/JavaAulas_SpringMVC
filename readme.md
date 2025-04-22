@@ -145,7 +145,7 @@ Essa aplicação foi criada em **Java 21**.
 ```java
     java {
         toolchain {
-            languageVersion = JavaLanguageVersion.of(21)
+            languageVersion = JavaLanguageVersion.of(21);
         }
     }
 ```
@@ -180,3 +180,74 @@ Utilizamos a sessão de scripts do Postman para testar as respostas da API. Cont
 **Exporte o arquivo `doc/SpringMVC.postman_collection.json` para o Postman e execute os testes.**
 
 ![postman_test.png](src/main/java/br/com/fiap/spring_mvc/doc/postman_test.png)
+
+
+### 🧪 Testes de Performance com JMeter
+Contém três arquivos `.jmx` com cenários distintos de performance no diretório `src/test/jmeter` do projeto testando a API RESTful do projeto de Gerenciamento de Filmes (`/filme/api`).
+
+#### ✅ Cenário 1 – GET Massivo (`GET Massivo TEST.jmx`)
+
+**Objetivo:** Avaliar a performance do endpoint de listagem de filmes sob carga constante de leitura.
+
+- **Endpoint testado:** `GET /filme/api/`
+- **Usuários Virtuais:** 50
+- **Ramp-up:** 10 segundos
+- **Duração:** 1 minuto
+- **Requisições simultâneas:** sim, com sobreposição de execução
+- **Validação:** Sucesso esperado com código `200`
+- **Listeners recomendados:** View Results Tree, Summary Report, Aggregate Report
+
+**Métricas observadas:**
+- Tempo médio de resposta
+- Pico de throughput (requisições/segundo)
+- Taxa de erro próxima de 0%
+
+**Interpretação esperada:**  
+Esse teste demonstra a estabilidade da API em cenários com múltiplos usuários acessando simultaneamente a listagem de filmes, sem alterações no banco de dados.
+---
+
+#### ✅ Cenário 2 – CRUD Completo (`CRUD Completo TEST.jmx`)
+**Objetivo:** Testar a estabilidade da API realizando uma sequência de operações completas por usuário.
+
+- **Fluxo por usuário:**
+  1. `POST /filme/api/` → cria filme
+  2. `GET /filme/api/` → lista todos
+  3. `PUT /filme/api/{id}` → atualiza
+  4. `DELETE /filme/api/{id}` → remove
+
+- **Usuários Virtuais:** 30
+- **Ramp-up:** 10 segundos
+- **Duração:** execução única por usuário
+- **Dependência entre requisições:** uso de `JSON Extractor` para reaproveitar o ID do `POST`
+- **Métricas observadas:**
+  - Comportamento funcional sob carga
+  - Respostas esperadas: `200`, `204` (essas são aceitas como sucesso)
+
+---
+
+#### ✅ Cenário 3 – POST Massivo (`POST Massivo TEST.jmx`)
+**Objetivo:** Testar a capacidade da API para lidar com grandes volumes de inserções simultâneas.
+
+- **Endpoint:** `POST /filme/api/`
+- **Usuários:** 500
+- **Ramp-up:** 10 segundos
+- **Duração:** 60 segundos
+- **Corpo da requisição:** JSON com dados fixos representando um filme genérico
+- **Validação de resposta:** `201`
+  **Foco do teste:**
+    - Tempo de resposta médio durante carga contínua
+    - Capacidade do sistema de registrar novos filmes sob pressão
+    - Estabilidade e ausência de falhas de escrita
+---
+
+## 📌 Como executar os testes
+1. Abrir o `.jmx` no Apache JMeter
+2. Ajustar o servidor se necessário (`localhost:8080`)
+3. Adicionar listeners como:
+  - **View Results Tree**
+  - **Summary Report**
+  - **Aggregate Report**
+4. Executar (botão verde ▶️)
+
+---
+

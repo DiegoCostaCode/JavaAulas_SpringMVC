@@ -177,12 +177,12 @@ dependencies {
 
 Utilizamos a sessão de scripts do Postman para testar as respostas da API. Contém testes positivos e negativos de todos endpoints API da aplicação (GET, POST, PUT, DELETE).
 
-**Exporte o arquivo `doc/SpringMVC.postman_collection.json` para o Postman e execute os testes.**
+**Importe o arquivo `doc/SpringMVC.postman_collection.json` para o Postman e execute os testes.**
 
-![postman_test.png](src/main/java/br/com/fiap/spring_mvc/doc/postman_test.png)
+![img.png](src/main/java/br/com/fiap/spring_mvc/doc/img.png)
 
+### 🚀 **Testes de Performance com JMeter**
 
-### 🧪 Testes de Performance com JMeter
 Contém três arquivos `.jmx` com cenários distintos de performance no diretório `src/test/jmeter` do projeto testando a API RESTful do projeto de Gerenciamento de Filmes (`/filme/api`).
 
 #### ✅ Cenário 1 – GET Massivo (`GET Massivo TEST.jmx`)

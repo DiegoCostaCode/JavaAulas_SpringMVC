@@ -1,12 +1,14 @@
 # **🎬 Spring MVC - Gerenciador de Filmes**
 
 <details>
-  <summary>CP 2 - Trabalho de QA</summary>
+  <summary>CP 2 - Trabalho de QA - integrantes & vídeo</summary>
 
 - Olá, professor. Segue os integrantes do grupo:
   - Diego Costa Silva - RM 552648
   - Mauricio Vieira Pereira - RM 553748
   - Lucas Minozzo Bronzeri - RM 553745
+
+Executando os 3 tipos de teste em [vídeo](https://youtu.be/AnNCpFOD0Q4)
 
 </details>
 
@@ -251,3 +253,48 @@ Esse teste demonstra a estabilidade da API em cenários com múltiplos usuários
 
 ---
 
+### 🧪 Testes Automatizados com Selenium
+
+Testes de interface automatizados utilizando Selenium WebDriver com JUnit, simulando interações reais do usuário com a aplicação web de gerenciamento de filmes.
+
+📂 Localização dos testes:
+```
+src/
+ ├── main/
+ │   └── java/...
+ └── test/
+     └── java/
+         └── br/
+             └── com/
+                 └── fiap/
+                     └── spring_mvc/
+                         └── testeSelenium.java
+```
+---  
+
+# 🧪 Testes Implementados:
+
+## ✅ `testCreateFilmeComSucesso()`  
+Simula o cadastro de um novo filme preenchendo todos os campos obrigatórios.  
+- Verifica se o redirecionamento para a listagem ocorre após o cadastro.
+
+## ✅ `testUpdateFilme()`  
+Simula a edição de um filme já cadastrado.  
+- Acessa a listagem, abre o modal de detalhes, clica em editar, altera os campos e salva.  
+- Verifica se retorna à listagem com sucesso.
+
+## ✅ `testDeleteFilme()`  
+Simula a exclusão de um filme existente.  
+- Acessa a listagem, abre o modal de detalhes e clica em "Deletar".  
+- Verifica se retorna à listagem corretamente.
+
+## ✅ `testCadastroFilmeCamposVazios()`  
+Verifica o comportamento ao tentar submeter o formulário de cadastro com todos os campos vazios.  
+- Esperado: continuar na tela de cadastro (`/filme`) sem redirecionamento.
+---  
+
+## ▶️ Como Executar
+
+1. Inicie o projeto localmente em `http://localhost:8080`
+2. Garanta que o banco esteja limpo (recomeça vazio com o H2)
+3. Execute os testes com botão direito no arquivo `testeSelenium.java` → **Run**
